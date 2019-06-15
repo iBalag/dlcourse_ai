@@ -18,7 +18,35 @@ def binary_classification_metrics(prediction, ground_truth):
     # Some helpful links:
     # https://en.wikipedia.org/wiki/Precision_and_recall
     # https://en.wikipedia.org/wiki/F1_score
-    
+
+    TP = 0
+    TN = 0
+    FP = 0
+    FN = 0
+    for i in range(prediction.shape[0]):
+        if prediction[i] == True:
+            if prediction[i] == ground_truth[i]:
+                TP = TP + 1
+            else:
+                FP = FP + 1
+        
+        if prediction[i] == False:
+            if prediction[i] == ground_truth[i]:
+                TN = TN + 1
+            else:
+                FN = FN + 1
+
+    RE = len(list(filter(lambda x: x == True, ground_truth)))
+
+    Pred_true = len(list(filter(lambda x: x == True, prediction)))
+
+    precision = TP / (TP + FP)
+    recall = TP / (TP + FN)
+
+    accuracy = (TP+TN)/(TP+FP+FN+TN)
+
+    f1 = (2*precision*recall)/(precision + recall)
+
     return precision, recall, f1, accuracy
 
 
